@@ -1,19 +1,28 @@
 import React from "react";
 import MovieCard from "./MovieCard";
 
-function MovieScreen(props){
-    const{movieList, page, setPage, list} = props
 
+const MovieScreen = ({addMovie, movieList, page, setPage, list, removeMovie}) => {
+
+    const decrement = () => setPage(page - 1);
+    const increment = () => setPage(page + 1);
+  
     const movieDisplay = movieList.map((movie, index) => {
-        return <MovieCard movie={movie} />;
+        console.log(movie.original_title)
+        return <MovieCard movie={movie} addMovie ={addMovie} list={list} removeMovie={removeMovie} />;
+
     });
-    
 
 
 return(
+
     <div className="page">
         <h1>Ty's Movie Theatre</h1>
-        <h3>Add a movie to your watchlist</h3>
+        <h2>Add a movie to your watchlist</h2>
+        <div className="btn-container">
+            <button onClick={page !== 1 && decrement}>Previous</button>
+            <button onClick={increment}>Next</button>
+        </div>
         <div className="movie-container">
             {movieDisplay}
         </div>

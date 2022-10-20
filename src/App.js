@@ -1,14 +1,26 @@
 import { useEffect, useState } from 'react';
-import './App.css';
 import Header from './components/Header'
 import MovieScreen from './components/MovieScreen';
+import Watchlist from './components/Watchlist';
 import axios from 'axios'
 
 function App() {
 
   const [movieList, setMovieList] = useState([])
-  const [list, setWatchList] = useState([])
+  const [list, setList] = useState([])
   const [page, setPage] = useState(1)
+
+  const addMovie = (movie) => {
+    console.log(movie)
+    setList([...list, movie]);
+  }
+
+  const removeMovie = (movie) => {
+    const newState = list.filter((mov) => {
+      return mov !== movie;
+    });
+    setList(newState)
+  };
 
   const getData = () => {
     axios
@@ -30,11 +42,17 @@ useEffect(() => {
       
       <main>
         <MovieScreen
+        addMovie = {addMovie}
         movieList = {movieList}
         page = {page}
         setPage = {setPage}
         list = {list}
         />
+        <Watchlist list = {list} 
+        addMovie = {addMovie}
+        removeMovie = {removeMovie}
+        />
+
       </main>
     </div>
   );
